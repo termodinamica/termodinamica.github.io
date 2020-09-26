@@ -3,14 +3,15 @@
 	<head>
 		<title>Tabela Termodinâmica</title>
 		<meta charset="utf-8"/>
-		<meta name="viewport" content="width=device-width,scale-initial=1"/>
+		<meta name="viewport" content="width=device-width"/>
 		<script src="./NBS_Tables Library_with_ErratumValues.js"></script>
 		<script>
 		function atualizar() {
 			var table = document.getElementsByTagName("table")[0];
 			var input = document.getElementsByTagName("input")[0];
 			
-			table.innerHTML = "<tr><th>Substância</th><th>Estado</th><th>Entalpia (kJ mol<sup>-1</sup>)</th><th>Gibbs (kJ mol<sup>-1</sup>)</th><th>Entropia (J mol<sup>-1</sup> K<sup>-1</sup>)</th></tr>";			
+			table.innerHTML = "<tr><th>Substância</th><th></th><th>&Delta;<sub>f</sub>H&#176;<br><small>(kJ mol<sup>-1</sup>)</small></th><th>&Delta;<sub>f</sub>G&#176;<br><small>(kJ mol<sup>-1</sup>)</small></th><th>S&#176;<br><small>(J mol<sup>-1</sup> K<sup>-1</sup>)</small></th></tr>";			
+			var encontrouAlgo = false;
 			
 			for (var i = 0; i < dados.length; i++) {
 				if (input.value == dados[i][0]) {
@@ -21,8 +22,20 @@
 					tr.innerHTML += "<td>" + dados[i][3] + "</td>";
 					tr.innerHTML += "<td>" + dados[i][4] + "</td>";
 					table.appendChild(tr);
+					encontrouAlgo = true;
 				}
 			};
+			if (!encontrouAlgo && input.value.length > 0) {
+				var tr = document.createElement("tr");
+				tr.innerHTML = "<td colspan=\"5\" style=\"color: red\"><small><b>Nenhum resultado encontrado para a substância " + input.value + "</b></small></td>";
+				table.appendChild(tr);
+			}
+			
+			if (!encontrouAlgo && input.value.length == 0) {
+				var tr = document.createElement("tr");
+				tr.innerHTML = "<td>-</td><td>-</td><td>-</td><td>-</td><td>-</td>";
+				table.appendChild(tr);
+			}
 		}
 		window.onload = function() {			
 			atualizar();
@@ -34,16 +47,23 @@
 		}
 		body {
 			text-align: center;
+			background: white;
+			background-image: linear-gradient(#ffffff, #99ccff);
 		}
 		table {
 			display: inline-block;
 			border-collapse: collapse;
+			background: white;
 		}
 		th, td {
 			padding: 5px;
 		}
 		input {
 			padding: 5px;
+		}
+		a {
+			text-decoration: none;
+			color: black;
 		}
 		</style>
 	</head>
@@ -56,10 +76,12 @@
 			<table border="1"></table>
 		</p>
 		<p>
-			<small>by Milton Rodrigues</small>
+			<small>by<br><b>Milton Rodrigues</b><br>iomltn@gmail.com</small>
 		</p>
 		<p>
-			<small>Colaborador:<br>Professor Davino</small>
+			<small>Colaborador:<br>Professor Davino Machado Andrade Neto</small>
+		</p>
+			<small>Fonte dos valores:<br><a href="https://data.nist.gov/od/id/mds2-2124" target="_blank"/>https://data.nist.gov/od/id/mds2-2124</a></small>
 		</p>
 	</body>
 </html>
