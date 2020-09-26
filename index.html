@@ -1,16 +1,65 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 	<head>
-		<title></title>
+		<title>Tabela Termodinâmica</title>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width,scale-initial=1"/>
+		<script src="./NBS_Tables Library_with_ErratumValues.js"></script>
+		<script>
+		function atualizar() {
+			var table = document.getElementsByTagName("table")[0];
+			var input = document.getElementsByTagName("input")[0];
+			
+			table.innerHTML = "<tr><th>Substância</th><th>Estado</th><th>Entalpia (kJ mol<sup>-1</sup>)</th><th>Gibbs (kJ mol<sup>-1</sup>)</th><th>Entropia (J mol<sup>-1</sup> K<sup>-1</sup>)</th></tr>";			
+			
+			for (var i = 0; i < dados.length; i++) {
+				if (input.value == dados[i][0]) {
+					var tr = document.createElement("tr");
+					tr.innerHTML = "<td>" + dados[i][0] + "</td>";
+					tr.innerHTML += "<td>" + dados[i][1] + "</td>";
+					tr.innerHTML += "<td>" + dados[i][2] + "</td>";
+					tr.innerHTML += "<td>" + dados[i][3] + "</td>";
+					tr.innerHTML += "<td>" + dados[i][4] + "</td>";
+					table.appendChild(tr);
+				}
+			};
+		}
+		window.onload = function() {			
+			atualizar();
+		};
+		</script>
 		<style>
+		* {
+			font-family: arial;
+		}
 		body {
 			text-align: center;
+		}
+		table {
+			display: inline-block;
+			border-collapse: collapse;
+		}
+		th, td {
+			padding: 5px;
+		}
+		input {
+			padding: 5px;
 		}
 		</style>
 	</head>
 	<body>
-		<h1>Tabela Termodinâmica</h1>
+		<h1>Valores Termodinâmicos</h1>
+		<p>
+			<input type="text" onkeyup="atualizar()" placeholder="Pesquisar substância..."/>
+		</p>
+		<p>
+			<table border="1"></table>
+		</p>
+		<p>
+			<small>by Milton Rodrigues</small>
+		</p>
+		<p>
+			<small>Colaborador:<br>Professor Davino</small>
+		</p>
 	</body>
 </html>
